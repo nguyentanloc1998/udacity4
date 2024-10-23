@@ -11,6 +11,8 @@ export async function handler(event) {
 
   await deleteTodo(userId, todoId)
 
+  httpEventLogger.info(`Finished processing deleteTodo event: ${todoId}`)
+
   return {
     statusCode: 204,
     headers: {

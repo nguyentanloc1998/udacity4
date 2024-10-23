@@ -1,6 +1,6 @@
-org: udacityproject4
-app: serverless-todo-app
-service: serverless-todo-app
+org: loc35
+app: loc35-udacity-cloud-2
+service: loc35-udacity-cloud-service-2
 
 plugins:
   - serverless-iam-roles-per-function
@@ -20,7 +20,7 @@ provider:
   environment:
     TODOS_TABLE: Todos-${self:provider.stage}
     TODOS_CREATED_AT_INDEX: CreatedAtIndex
-    IMAGES_S3_BUCKET: hoangvv15-todos-images-${self:provider.stage}
+    IMAGES_S3_BUCKET: locnt35-todos-${self:provider.stage}
     SIGNED_URL_EXPIRATION: 300
 
 functions:
@@ -114,6 +114,7 @@ functions:
           method: post
           path: todos/{todoId}/attachment
           cors: true
+    iamRoleStatementsName: GenerateUploadUrlRole
     iamRoleStatements:
       - Effect: Allow
         Action:

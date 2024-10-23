@@ -5,13 +5,13 @@ import { findByUserId } from '../../businessLogic/todos.mjs'
 const httpLogger = createLogger('http')
 
 export async function handler(event) {
-  httpLogger.info(`Now processing getTodos event ${JSON.stringify(event, null, 2)}`)
+  httpLogger.info(`Now processing getTodos event ${event}`)
 
   const userId = getUserId(event)
 
   const items = (await findByUserId(userId))
 
-  httpLogger.info(`Finished processing getTodos event ${JSON.stringify(event, null, 2)}`)
+  httpLogger.info(`Finished processing getTodos event ${event}`)
 
   return {
     statusCode: 200,

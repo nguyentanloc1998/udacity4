@@ -9,9 +9,9 @@ export async function handler(event) {
   const todoId = event.pathParameters.todoId
   const userId = getUserId(event)
 
-  httpEventLogger.info(`Now processing updateTodo ${JSON.stringify(updateRequest, null, 2)}, id: ${todoId}`)
+  httpEventLogger.info(`Now processing updateTodo ${updateRequest}, id: ${todoId}`)
   await updateTodo(userId, todoId, updateRequest);
-  httpEventLogger.info(`Finished processing updateTodo ${JSON.stringify(updateRequest, null, 2)}, id: ${todoId}`)
+  httpEventLogger.info(`Finished processing updateTodo ${updateRequest}, id: ${todoId}`)
 
   return {
     statusCode: 204,

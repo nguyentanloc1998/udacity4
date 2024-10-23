@@ -15,8 +15,13 @@ export class TodosAccess {
     this.dynamoDbClient = DynamoDBDocument.from(documentClient);
   }
 
+  /**
+   * Find by user id
+   * @param userId the user id
+   * @returns all todos for the user
+   */
   async findAllByUserId(userId) {
-    logger.info(`Getting all TODOs for user ${userId}`);
+    logger.info(`Getting all for user ${userId}`);
 
     const params = {
       TableName: this.todosTable,
@@ -30,8 +35,13 @@ export class TodosAccess {
     return result.Items;
   }
 
+  /**
+   * Create the todo
+   * @param createTodoRequest the todo request
+   * @param userId the user id
+   */
   async create(createTodoRequest){
-    logger.info(`Creating a TODO with id ${createTodoRequest.todoId} ${JSON.stringify(createTodoRequest, null, 2)}`);
+    logger.info(`Create ${createTodoRequest}`);
 
     await this.dynamoDbClient.put({
       TableName: this.todosTable,
@@ -41,8 +51,14 @@ export class TodosAccess {
     return {...createTodoRequest}
   }
 
+  /**
+   * Update the todo
+   * @param userId the user id
+   * @param todoId the todo id
+   * @param updateTodoRequest the update todo request
+   */
   async update(userId, todoId, updateTodoRequest = {}) {
-    logger.info(`Updating ${todoId} with ${JSON.stringify(updateTodoRequest, null, 2)}`)
+    logger.info(`Updating ${todoId} with ${updateTodoRequest}`)
     const { name, dueDate, done } = updateTodoRequest
     const params = {
       TableName: this.todosTable,
@@ -65,8 +81,31 @@ export class TodosAccess {
     await this.dynamoDbClient.update(params);
   }
 
+  /**
+   * Detete the todo
+   * @param userId the user id
+   * @param todoId the todo id
+   */
+  async delete(userId, todoId) {
+    logger.info(`Delete: ${todoId} user: ${userId}`);
+    await this.dynamoDbClient.delete({
+      TableName: this.todosTable,
+      Key: {
+        userId,
+        todoId
+      }
+    });
+  }
+
+  /**
+   * Set attactment url
+   * @param userId the user id
+   * @param todoId the todo id
+   * @param image the image
+   * @param attachmentUrl the attachment url
+   */
   async setAttachmentUrl(userId, todoId, image, attachmentUrl) {
-    logger.info(`set attachmentUrl for ${todoId} ${attachmentUrl}`)
+    logger.info(`Set attachmentUrl ${todoId} ${attachmentUrl}`)
     const params = {
       TableName: this.todosTable,
       Key: {
@@ -82,16 +121,5 @@ export class TodosAccess {
     };
 
     await this.dynamoDbClient.update(params);
-  }
-
-  async delete(userId, todoId) {
-    logger.info(`Removing TODO: ${todoId} for user: ${userId}`);
-    await this.dynamoDbClient.delete({
-      TableName: this.todosTable,
-      Key: {
-        userId,
-        todoId
-      }
-    });
   }
 }
