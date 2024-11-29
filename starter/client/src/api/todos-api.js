@@ -4,7 +4,8 @@ import {API_DESTINATION} from "../config"
 
 export async function getTodos(idToken) {
   console.log('Fetching todos')
-
+  console.log(API_DESTINATION)
+  console.log(idToken)
   const response = await Axios.get(
     `${API_DESTINATION}/todos`,
     {

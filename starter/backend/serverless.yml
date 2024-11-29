@@ -20,7 +20,7 @@ provider:
   environment:
     TODOS_TABLE: Todos-${self:provider.stage}
     TODOS_CREATED_AT_INDEX: CreatedAtIndex
-    IMAGES_S3_BUCKET: locnt-todos-${self:provider.stage}
+    IMAGES_S3_BUCKET: tony-todos-${self:provider.stage}
     SIGNED_URL_EXPIRATION: 300
 
 functions:
